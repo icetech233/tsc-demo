@@ -1,0 +1,44 @@
+// 机器人 hook 版本 非app
+const api_feishu_post= async (uuid:String)=> {
+
+    const url_hook = `https://open.feishu.cn/open-apis/bot/v2/hook/${uuid}`
+
+    let reqData : FeiShuHookRequest= {
+        msg_type : MsgType.Post,
+        content: {
+            post : {
+                zh_cn : {
+                    title: "富文本标题",
+                    content: [[
+                        {
+                            "tag": "text",
+                            "text": "第一行:"
+                        },
+                        {
+                            "tag": "a",
+                            "href": "https://www.baidu.cn",
+                            "text": "百度官网"
+                        },
+                    ],[
+                        {
+                            "tag": "img",
+                            "image_key": "img_v2_b2e8ddd7-a868-4a2c-a4a7-507d94e33bcg"
+                        }
+                    ],[
+                        {
+                            "tag": "at",
+                            "user_id": "ou_bcb32b20a460960d043ab8edbe274bff",
+                            "user_name": "寒冰dsg"
+                        }
+                    ]]
+                }
+            }
+
+        }
+    }
+    
+    let {status,data } = await axios.post<HookRes>(url_hook, reqData);
+
+    console.log("\nstatus:",status,"\n",data)
+
+}
